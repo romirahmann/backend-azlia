@@ -1,25 +1,22 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-const path = require('path')
+const path = require("path");
 
+const masterRoutes = require("./master_routes/master.routes");
+const auth_routes = require("./utility_routes/auth.routes");
 
-const masterRoutes = require('./master_routes/master.routes');
-const auth_routes = require('./utility_routes/auth.routes');
-
-const { verifyToken, accessControl } = require('../services/auth.service');
+const { verifyToken, accessControl } = require("../services/auth.service");
 
 // not found route
-router.get('/not-found', function(req, res) {
-    res.status(404).sendFile(path.join(__dirname, '../views/not-found.html'));
+router.get("/not-found", function (req, res) {
+  res.status(404).sendFile(path.join(__dirname, "../views/not-found.html"));
 });
 
-// authentication routes usage 
-router.use('/auth/', auth_routes);
+// authentication routes usage
+router.use("/auth/", auth_routes);
 
-
-// master data routes usage 
-router.use('/master/', accessControl,verifyToken, masterRoutes);
-
+// master data routes usage
+router.use("/master/", accessControl, masterRoutes);
 
 //kecuali master, seharusnya routes dipisah per-table
 
